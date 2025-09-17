@@ -2,9 +2,7 @@ package com.kauacorreaarruda.springfood.di.service;
 
 import com.kauacorreaarruda.springfood.di.modelo.Cliente;
 import com.kauacorreaarruda.springfood.di.notificacao.Notificador;
-import org.springframework.stereotype.Component;
 
-@Component
 public class AtivacaoClienteService {
 
     private Notificador notificador;
