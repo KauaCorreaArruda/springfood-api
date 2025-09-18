@@ -1,35 +1,19 @@
 package com.kauacorreaarruda.springfood.di.service;
 
-import com.kauacorreaarruda.springfood.di.notificacao.NivelUrgencia;
-import com.kauacorreaarruda.springfood.di.notificacao.TipoDoNotificador;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
+import com.kauacorreaarruda.springfood.di.modelo.Cliente;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import com.kauacorreaarruda.springfood.di.modelo.Cliente;
-import com.kauacorreaarruda.springfood.di.notificacao.Notificador;
-
-//@Component
+@Component
 public class AtivacaoClienteService {
 
-    @TipoDoNotificador(NivelUrgencia.SEM_URGENCIA)
     @Autowired
-    private Notificador notificador;
-
-//    @PostConstruct
-    public void init() {
-        System.out.println("INIT " + notificador);
-    }
-
-//    @PreDestroy
-    public void destroy() {
-        System.out.println("DESTROY");
-    }
+    private ApplicationEventPublisher eventPublisher;
 
     public void ativar(Cliente cliente) {
         cliente.ativar();
 
-        notificador.notificar(cliente, "Seu cadastro no sistema está ativo!");
+    eventPublisher.publishEvent(new ClienteAtivadoEvent(cliente));
     }
 }
