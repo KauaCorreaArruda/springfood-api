@@ -9,8 +9,7 @@ public class NotificacaoConfig {
 
     @Bean
     public NotificadorEmail notificadorEmail() {
-        NotificadorEmail notificador = new NotificadorEmail("smtp.kauamail.com.br");
-        notificador.setCaixaAlta(true );
+        NotificadorEmail notificador = new NotificadorEmail();
 
         return notificador;
     }

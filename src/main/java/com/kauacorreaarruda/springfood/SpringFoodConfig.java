@@ -10,13 +10,12 @@ public class SpringFoodConfig {
 
     @Bean
     public NotificadorEmail notificadorEmail() {
-        NotificadorEmail notificador = new NotificadorEmail("smtp.kauamail.com.br");
-        notificador.setCaixaAlta(true );
+        NotificadorEmail notificador = new NotificadorEmail();
 
         return notificador;
     }
     @Bean
     public AtivacaoClienteService getAtivacaoClienteService() {
-        return new AtivacaoClienteService(notificadorEmail());
+        return new AtivacaoClienteService();
     }
 }

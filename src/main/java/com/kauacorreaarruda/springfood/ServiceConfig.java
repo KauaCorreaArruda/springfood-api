@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfig {
 
     @Bean
-    public AtivacaoClienteService getAtivacaoClienteService(Notificador notificador) {
-        return new AtivacaoClienteService(notificador);
+    public AtivacaoClienteService ativacaoClienteService(Notificador notificador) {
+        return new AtivacaoClienteService();
     }
 }
