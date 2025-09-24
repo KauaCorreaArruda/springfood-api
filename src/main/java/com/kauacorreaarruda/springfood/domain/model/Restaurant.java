@@ -1,8 +1,6 @@
 package com.kauacorreaarruda.springfood.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,11 +9,11 @@ import java.util.Objects;
 public class Restaurant {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
-    @Column(name = "freight_rate")
+    
     private BigDecimal freightRate;
 
     public Long getId() {
