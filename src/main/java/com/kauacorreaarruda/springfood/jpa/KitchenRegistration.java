@@ -4,6 +4,7 @@ import com.kauacorreaarruda.springfood.domain.model.Kitchen;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,5 +17,10 @@ public class KitchenRegistration {
     public List<Kitchen> kitchenList() {
         return manager.createQuery("from Kitchen", Kitchen.class)
                 .getResultList();
+    }
+
+    @Transactional
+    public Kitchen add(Kitchen kitchen) {
+        return manager.merge(kitchen);
     }
 }
