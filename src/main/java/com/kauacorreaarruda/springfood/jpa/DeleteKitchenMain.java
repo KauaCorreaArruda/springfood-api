@@ -6,10 +6,8 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 
-import java.util.List;
 
-
-public class IncludeKitchenMain {
+public class DeleteKitchenMain {
 
     public static void main(String[] args) {
         ApplicationContext applicationContext = new SpringApplicationBuilder(SpringfoodApiApplication.class)
@@ -18,16 +16,9 @@ public class IncludeKitchenMain {
 
         KitchenRegistration kitchenRegistration = applicationContext.getBean(KitchenRegistration.class);
 
-        Kitchen kitchen1 = new Kitchen();
-        kitchen1.setName("Brazilian");
+        Kitchen kitchen = new Kitchen();
+        kitchen.setId(1L);
 
-        Kitchen kitchen2 = new Kitchen();
-        kitchen2.setName("Japanese");
-
-        kitchen1 = kitchenRegistration.save(kitchen1);
-        kitchen2 = kitchenRegistration.save(kitchen2);
-
-        System.out.println(kitchen1.getId() + " - " + kitchen1.getName());
-        System.out.println(kitchen2.getId() + " - " + kitchen2.getName());
+        kitchenRegistration.remove(kitchen);
     }
 }

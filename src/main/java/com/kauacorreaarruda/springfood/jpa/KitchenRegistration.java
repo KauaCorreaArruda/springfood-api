@@ -27,4 +27,10 @@ public class KitchenRegistration {
     public Kitchen save(Kitchen kitchen) {
         return manager.merge(kitchen);
     }
+
+    @Transactional
+    public void remove(Kitchen kitchen) {
+        kitchen = searchKitchen(kitchen.getId());
+        manager.remove(kitchen);
+    }
 }
