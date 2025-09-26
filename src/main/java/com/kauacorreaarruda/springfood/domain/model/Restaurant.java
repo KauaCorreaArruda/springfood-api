@@ -21,5 +21,6 @@ public class Restaurant {
     private BigDecimal freightRate;
 
     @ManyToOne
+    @JoinColumn(name = "kitchen_id")
     private Kitchen kitchen;
 }
