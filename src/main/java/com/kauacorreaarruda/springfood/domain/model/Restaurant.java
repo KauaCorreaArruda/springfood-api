@@ -19,4 +19,7 @@ public class Restaurant {
     private String name;
     
     private BigDecimal freightRate;
+
+    @ManyToOne
+    private Kitchen kitchen;
 }
