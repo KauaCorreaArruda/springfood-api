@@ -1,6 +1,7 @@
-package com.kauacorreaarruda.springfood.jpa;
+package com.kauacorreaarruda.springfood.infrastructure.repository;
 
 import com.kauacorreaarruda.springfood.domain.model.Kitchen;
+import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
@@ -9,28 +10,32 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Component
-public class KitchenRegistration {
+public class KitchenRepositoryImpl implements KitchenRepository {
 
     @PersistenceContext
     private EntityManager manager;
 
-    public List<Kitchen> kitchenList() {
+    @Override
+    public List<Kitchen> findAll() {
         return manager.createQuery("from Kitchen", Kitchen.class)
                 .getResultList();
     }
 
-    public Kitchen searchKitchen(Long id) {
+    @Override
+    public Kitchen findById(Long id) {
         return manager.find(Kitchen.class, id);
     }
 
     @Transactional
-    public Kitchen save(Kitchen kitchen) {
+    @Override
+    public Kitchen add(Kitchen kitchen) {
         return manager.merge(kitchen);
     }
 
     @Transactional
-    public void remove(Kitchen kitchen) {
-        kitchen = searchKitchen(kitchen.getId());
+    @Override
+    public void delete(Kitchen kitchen) {
+        kitchen = findById(kitchen.getId());
         manager.remove(kitchen);
     }
 }

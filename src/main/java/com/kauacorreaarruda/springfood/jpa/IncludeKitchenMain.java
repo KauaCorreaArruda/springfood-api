@@ -2,12 +2,10 @@ package com.kauacorreaarruda.springfood.jpa;
 
 import com.kauacorreaarruda.springfood.SpringfoodApiApplication;
 import com.kauacorreaarruda.springfood.domain.model.Kitchen;
+import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
-
-import java.util.List;
-
 
 public class IncludeKitchenMain {
 
@@ -16,7 +14,7 @@ public class IncludeKitchenMain {
                 .web(WebApplicationType.NONE)
                 .run(args);
 
-        KitchenRegistration kitchenRegistration = applicationContext.getBean(KitchenRegistration.class);
+        KitchenRepository kitchenRepository = applicationContext.getBean(KitchenRepository.class);
 
         Kitchen kitchen1 = new Kitchen();
         kitchen1.setName("Brazilian");
@@ -24,8 +22,8 @@ public class IncludeKitchenMain {
         Kitchen kitchen2 = new Kitchen();
         kitchen2.setName("Japanese");
 
-        kitchen1 = kitchenRegistration.save(kitchen1);
-        kitchen2 = kitchenRegistration.save(kitchen2);
+        kitchen1 = kitchenRepository.add(kitchen1);
+        kitchen2 = kitchenRepository.add(kitchen2);
 
         System.out.println(kitchen1.getId() + " - " + kitchen1.getName());
         System.out.println(kitchen2.getId() + " - " + kitchen2.getName());
