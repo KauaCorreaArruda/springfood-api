@@ -1,10 +1,8 @@
 package com.kauacorreaarruda.springfood.api.resource;
 
-import com.kauacorreaarruda.springfood.api.model.KitchensXmlWrapper;
 import com.kauacorreaarruda.springfood.domain.model.Kitchen;
 import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.*;
@@ -20,20 +18,15 @@ public class KitchenResource {
         this.kitchenRepository = kitchenRepository;
     }
 
-
     @GetMapping
     public List<Kitchen> findAll() {
         return  kitchenRepository.findAll();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public KitchensXmlWrapper findAllXml() {
-        return  new KitchensXmlWrapper(kitchenRepository.findAll());
-    }
-
-    @ResponseStatus(HttpStatus.CREATED)
     @GetMapping("/{id}")
-    public Kitchen findById(@PathVariable Long id) {
-        return kitchenRepository.findById(id);
+    public ResponseEntity<Kitchen> findById(@PathVariable Long id) {
+        Kitchen kitchen = kitchenRepository.findById(id);
+
+        return ResponseEntity.ok(kitchen);
     }
 }
