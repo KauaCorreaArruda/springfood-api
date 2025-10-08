@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@JsonRootName("gastronomy")
+@JsonRootName("kitchen")
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -18,8 +18,6 @@ public class Kitchen {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @JsonIgnore
-    @JsonProperty("titulo")
     @Column(nullable = false)
     private String name;
 }
