@@ -4,6 +4,7 @@ import com.kauacorreaarruda.springfood.domain.model.Kitchen;
 import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,15 +22,13 @@ public class KitchenResource {
     }
 
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Kitchen> findAll1() {
-        System.out.println("findAll1");
+    @GetMapping
+    public List<Kitchen> findAll() {
         return  kitchenRepository.findAll();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public List<Kitchen> findAll2() {
-        System.out.println("findAll2");
-        return  kitchenRepository.findAll();
+    @GetMapping("/{id}")
+    public Kitchen findById(@PathVariable Long id) {
+        return kitchenRepository.findById(id);
     }
 }
