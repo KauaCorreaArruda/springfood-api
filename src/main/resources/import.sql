@@ -1,5 +1,5 @@
-    insert into kitchen (id, name) values (1, 'Thai')
-    insert into kitchen (id, name) values (2, 'Indian')
+    insert into kitchen (name) values ('Thai')
+    insert into kitchen (name) values ('Indian')
 
 
     insert into restaurant (id, name, freight_rate, kitchen_id) values (1, 'Thai Gourmet', 10, 1)
