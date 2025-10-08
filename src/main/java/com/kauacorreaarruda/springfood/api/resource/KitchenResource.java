@@ -27,6 +27,9 @@ public class KitchenResource {
     public ResponseEntity<Kitchen> findById(@PathVariable Long id) {
         Kitchen kitchen = kitchenRepository.findById(id);
 
+    if (kitchen != null) {
         return ResponseEntity.ok(kitchen);
+    }
+    return ResponseEntity.notFound().build();
     }
 }
