@@ -27,8 +27,8 @@ public class IncludeRestaurantMain {
         restaurant2.setName("TacoBell");
         restaurant2.setFreightRate(BigDecimal.valueOf(6.30));
 
-        restaurant1 = restaurantRepository.add(restaurant1);
-        restaurant2 = restaurantRepository.add(restaurant2);
+        restaurant1 = restaurantRepository.save(restaurant1);
+        restaurant2 = restaurantRepository.save(restaurant2);
 
         System.out.println(restaurant1.getId() + " - " + restaurant1.getName());
         System.out.println(restaurant2.getId() + " - " + restaurant2.getName());

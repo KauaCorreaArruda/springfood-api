@@ -22,8 +22,8 @@ public class IncludeKitchenMain {
         Kitchen kitchen2 = new Kitchen();
         kitchen2.setName("Japanese");
 
-        kitchen1 = kitchenRepository.add(kitchen1);
-        kitchen2 = kitchenRepository.add(kitchen2);
+        kitchen1 = kitchenRepository.save(kitchen1);
+        kitchen2 = kitchenRepository.save(kitchen2);
 
         System.out.println(kitchen1.getId() + " - " + kitchen1.getName());
         System.out.println(kitchen2.getId() + " - " + kitchen2.getName());

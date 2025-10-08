@@ -28,7 +28,7 @@ public class StateRepositoryImpl implements StateRepository {
 
     @Transactional
     @Override
-    public State add(State state) {
+    public State save(State state) {
         return manager.merge(state);
     }
 

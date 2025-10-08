@@ -8,6 +8,6 @@ public interface KitchenRepository {
 
     List<Kitchen> findAll();
     Kitchen findById(Long id);
-    Kitchen add (Kitchen kitchen);
+    Kitchen save(Kitchen kitchen);
     void delete(Kitchen kitchen);
 }

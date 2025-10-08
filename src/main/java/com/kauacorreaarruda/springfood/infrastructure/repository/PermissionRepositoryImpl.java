@@ -28,7 +28,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
     @Transactional
     @Override
-    public Permission add(Permission permission) {
+    public Permission save(Permission permission) {
         return manager.merge(permission);
     }
 
