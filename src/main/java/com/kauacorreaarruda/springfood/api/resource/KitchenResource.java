@@ -2,6 +2,7 @@ package com.kauacorreaarruda.springfood.api.resource;
 
 import com.kauacorreaarruda.springfood.domain.model.Kitchen;
 import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +19,6 @@ public class KitchenResource {
         this.kitchenRepository = kitchenRepository;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Kitchen create(@RequestBody Kitchen kitchen) {
-        return kitchenRepository.save(kitchen);
-    }
-
     @GetMapping
     public List<Kitchen> findAll() {
         return  kitchenRepository.findAll();
@@ -37,5 +32,25 @@ public class KitchenResource {
         return ResponseEntity.ok(kitchen);
     }
     return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Kitchen create(@RequestBody Kitchen kitchen) {
+        return kitchenRepository.save(kitchen);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Kitchen> update(@PathVariable Long id, @RequestBody Kitchen kitchen) {
+        Kitchen updatedKitchen = kitchenRepository.findById(id);
+
+        if (updatedKitchen != null) {
+//        updatedKitchen.setName(kitchen.getName());
+        BeanUtils.copyProperties(kitchen, updatedKitchen, "id");
+
+        kitchenRepository.save(updatedKitchen);
+        return ResponseEntity.ok(updatedKitchen);
+        }
+        return ResponseEntity.notFound().build();
     }
 }
