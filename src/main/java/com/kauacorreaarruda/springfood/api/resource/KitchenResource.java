@@ -3,6 +3,7 @@ package com.kauacorreaarruda.springfood.api.resource;
 import com.kauacorreaarruda.springfood.domain.model.Kitchen;
 import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +22,17 @@ public class KitchenResource {
 
     @GetMapping
     public List<Kitchen> findAll() {
-        return  kitchenRepository.findAll();
+        return kitchenRepository.findAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Kitchen> findById(@PathVariable Long id) {
         Kitchen kitchen = kitchenRepository.findById(id);
 
-    if (kitchen != null) {
-        return ResponseEntity.ok(kitchen);
-    }
-    return ResponseEntity.notFound().build();
+        if (kitchen != null) {
+            return ResponseEntity.ok(kitchen);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -46,11 +47,27 @@ public class KitchenResource {
 
         if (updatedKitchen != null) {
 //        updatedKitchen.setName(kitchen.getName());
-        BeanUtils.copyProperties(kitchen, updatedKitchen, "id");
+            BeanUtils.copyProperties(kitchen, updatedKitchen, "id");
 
-        kitchenRepository.save(updatedKitchen);
-        return ResponseEntity.ok(updatedKitchen);
+            kitchenRepository.save(updatedKitchen);
+            return ResponseEntity.ok(updatedKitchen);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Kitchen> delete(@PathVariable Long id) {
+        try {
+            Kitchen kitchen = kitchenRepository.findById(id);
+
+            if (kitchen != null) {
+                kitchenRepository.delete(kitchen);
+
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.notFound().build();
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 }
