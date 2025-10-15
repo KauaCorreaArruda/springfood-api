@@ -2,6 +2,7 @@ package com.kauacorreaarruda.springfood.api.resource;
 
 import com.kauacorreaarruda.springfood.domain.model.Kitchen;
 import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
+import com.kauacorreaarruda.springfood.domain.service.KitchenService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -15,9 +16,11 @@ import java.util.List;
 public class KitchenResource {
 
     private final KitchenRepository kitchenRepository;
+    private final KitchenService kitchenService;
 
-    public KitchenResource(KitchenRepository kitchenRepository) {
+    public KitchenResource(KitchenRepository kitchenRepository, KitchenService kitchenService) {
         this.kitchenRepository = kitchenRepository;
+        this.kitchenService = kitchenService;
     }
 
     @GetMapping
@@ -38,7 +41,7 @@ public class KitchenResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Kitchen create(@RequestBody Kitchen kitchen) {
-        return kitchenRepository.save(kitchen);
+        return kitchenService.save(kitchen);
     }
 
     @PutMapping("/{id}")
