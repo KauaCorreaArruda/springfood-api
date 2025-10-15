@@ -1,10 +1,11 @@
 package com.kauacorreaarruda.springfood.api.resource;
 
+import com.kauacorreaarruda.springfood.domain.exception.EntityNotAvailableException;
 import com.kauacorreaarruda.springfood.domain.model.Kitchen;
 import com.kauacorreaarruda.springfood.domain.repository.KitchenRepository;
 import com.kauacorreaarruda.springfood.domain.service.KitchenService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,15 +62,13 @@ public class KitchenResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Kitchen> delete(@PathVariable Long id) {
         try {
-            Kitchen kitchen = kitchenRepository.findById(id);
+            kitchenService.delete(id);
+            return ResponseEntity.noContent().build();
 
-            if (kitchen != null) {
-                kitchenRepository.delete(kitchen);
-
-                return ResponseEntity.noContent().build();
-            }
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
-        } catch (DataIntegrityViolationException e) {
+
+        } catch (EntityNotAvailableException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
     }
