@@ -2,11 +2,11 @@ package com.kauacorreaarruda.springfood.api.resource;
 
 import com.kauacorreaarruda.springfood.domain.model.Restaurant;
 import com.kauacorreaarruda.springfood.domain.repository.RestaurantRepository;
+import com.kauacorreaarruda.springfood.domain.service.RestaurantService;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,9 +15,11 @@ import java.util.List;
 public class RestaurantResource {
 
     private final RestaurantRepository restaurantRepository;
+    private final RestaurantService restaurantService;
 
-    public RestaurantResource(RestaurantRepository restaurantRepository) {
+    public RestaurantResource(RestaurantRepository restaurantRepository, RestaurantService restaurantService) {
         this.restaurantRepository = restaurantRepository;
+        this.restaurantService = restaurantService;
     }
 
     @GetMapping
@@ -33,5 +35,16 @@ public class RestaurantResource {
             return ResponseEntity.ok(restaurant);
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody Restaurant restaurant) {
+        try {
+            restaurant = restaurantService.save(restaurant);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(restaurant);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

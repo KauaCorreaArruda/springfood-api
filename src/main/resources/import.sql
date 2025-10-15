@@ -2,9 +2,9 @@
     insert into kitchen (name) values ('Indian')
 
 
-    insert into restaurant (id, name, freight_rate, kitchen_id) values (1, 'Thai Gourmet', 10, 1)
-    insert into restaurant (id, name, freight_rate, kitchen_id) values (2, 'Thai Delivery', 9.50, 1)
-    insert into restaurant (id, name, freight_rate, kitchen_id) values (3, 'Tuk Tuk Indian Food', 15, 2)
+    insert into restaurant (name, freight_rate, kitchen_id) values ('Thai Gourmet', 10, 1)
+    insert into restaurant (name, freight_rate, kitchen_id) values ('Thai Delivery', 9.50, 1)
+    insert into restaurant (name, freight_rate, kitchen_id) values ('Tuk Tuk Indian Food', 15, 2)
 
     insert into state (id, name) values (1,'Minas Gerais');
     insert into state (id, name) values (2, 'Rio de Janeiro');
