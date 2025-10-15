@@ -50,10 +50,9 @@ public class KitchenResource {
         Kitchen updatedKitchen = kitchenRepository.findById(id);
 
         if (updatedKitchen != null) {
-//        updatedKitchen.setName(kitchen.getName());
             BeanUtils.copyProperties(kitchen, updatedKitchen, "id");
 
-            kitchenRepository.save(updatedKitchen);
+            updatedKitchen = kitchenService.save(updatedKitchen);
             return ResponseEntity.ok(updatedKitchen);
         }
         return ResponseEntity.notFound().build();
