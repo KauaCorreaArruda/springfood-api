@@ -4,6 +4,7 @@ import com.kauacorreaarruda.springfood.domain.model.Restaurant;
 import com.kauacorreaarruda.springfood.domain.repository.RestaurantRepository;
 import com.kauacorreaarruda.springfood.domain.service.RestaurantService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +45,24 @@ public class RestaurantResource {
 
             return ResponseEntity.status(HttpStatus.CREATED).body(restaurant);
         } catch (EntityNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Restaurant restaurant) {
+
+        try {
+            Restaurant updatedRestaurant = restaurantRepository.findById(id);
+
+            if (updatedRestaurant != null) {
+                BeanUtils.copyProperties(restaurant, updatedRestaurant, "id");
+
+                updatedRestaurant = restaurantService.save(updatedRestaurant);
+                return ResponseEntity.ok(updatedRestaurant);
+            }
+            return ResponseEntity.notFound().build();
+        }  catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
