@@ -4,6 +4,7 @@ import com.kauacorreaarruda.springfood.domain.model.State;
 import com.kauacorreaarruda.springfood.domain.repository.StateRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,12 @@ public class StateRepositoryImpl implements StateRepository {
 
     @Transactional
     @Override
-    public void delete(State state) {
+    public void delete(Long id) {
+        State state = findById(id);
+
+        if (state == null) {
+            throw new EmptyResultDataAccessException(1);
+        }
         manager.remove(state);
     }
 }
