@@ -43,7 +43,7 @@ public class StateResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public State create(@RequestBody State state) {
-        return stateRepository.save(state);
+        return stateService.save(state);
     }
 
     @PutMapping("/{id}")

@@ -10,11 +10,11 @@
     insert into state (name) values ('Rio de Janeiro');
     insert into state (name) values ('Espirito Santo');
 
-    insert into city (id, name, state_id) values (1, 'Uberlândia', 1)
-    insert into city (id, name, state_id) values (2, 'Belo Horizonte', 1)
-    insert into city (id, name, state_id) values (3, 'Cabo Frio', 2)
-    insert into city (id, name, state_id) values (4, 'Rio de Janeiro', 2)
-    insert into city (id, name, state_id) values (5, 'Vitória', 3)
+    insert into city (name, state_id) values ('Uberlândia', 1)
+    insert into city (name, state_id) values ('Belo Horizonte', 1)
+    insert into city (name, state_id) values ('Cabo Frio', 2)
+    insert into city (name, state_id) values ('Rio de Janeiro', 2)
+    insert into city (name, state_id) values ('Vitória', 3)
 
     insert into payment_method (id, description) values (1, 'Credit card')
     insert into payment_method (id, description) values (2, 'Debit card')
