@@ -1,4 +1,20 @@
 services:
+  api:
+    build: .
+    container_name: springfood-api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/spring_food_api
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=12345
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - springfood-net
+
   database:
     image: postgres:16-alpine
     container_name: springfood-db
@@ -10,7 +26,19 @@ services:
       - POSTGRES_PASSWORD=12345
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     restart: always
+    networks:
+      - springfood-net
 
 volumes:
   postgres_data:
+
+networks:
+  springfood-net:
+    driver: bridge
