@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/restaurants")
@@ -62,8 +63,28 @@ public class RestaurantResource {
                 return ResponseEntity.ok(updatedRestaurant);
             }
             return ResponseEntity.notFound().build();
-        }  catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> partialUpdate(@PathVariable Long id, @RequestBody Map<String, Object> fields) {
+
+        Restaurant updatedRestaurant = restaurantRepository.findById(id);
+
+        if (updatedRestaurant == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        merge(fields, updatedRestaurant);
+
+        return update(id, updatedRestaurant);
+    }
+
+    private void merge(Map<String, Object> originFields,  Restaurant destinyRestaurant) {
+        originFields.forEach((name, value) -> {
+            System.out.println(name + " = " + value);
+        });
     }
 }
